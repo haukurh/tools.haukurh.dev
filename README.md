@@ -1,6 +1,12 @@
 # Online tools
 Online tools which are helpful for debugging web-related things and problems. See on [tools.haukurh.dev](https://tools.haukurh.dev).
 
+## Version v2
+
+This is an update to a long-lived project, which was originally written in PHP (see v1), the site has been completely
+rewritten and all the functionality is in JavaScript meaning that it's all-in-browser.
+There for no data sent over the wire and no processing on the server side.
+
 ## Screenshot
 
 ![](assets/screenshot.png)
@@ -9,35 +15,20 @@ Online tools which are helpful for debugging web-related things and problems. Se
 
 __Encode/Decode__
 
-- HTML Entities
-- quoted-printable
 - URL
 - base64
-- JSON
-- PHP serialize
 
 __Text manipulation__
 
 - Lowercase
 - Uppercase
 - Sort ASC / DESC
-- Remove duplicates
-- Grab all emails from text
-- Reverse
 
 __Date__
 
 - UNIX time to date
 - Date to UNIX time
 
-__HTML__
+## Icons
 
-- Strip tags
-- Clean up HTML code
-- Beautify JS/HTML
-- Lorem Ipsum
-
-__Browser__
-
-- IP address
-- User agent
+This site uses an icon from [FontAwesome](https://fontawesome.com/v5.15/icons/copy?style=regular).
