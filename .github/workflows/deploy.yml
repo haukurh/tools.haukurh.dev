@@ -1,0 +1,49 @@
+name: Deploy to S3 site
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    name: Deploy
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: eu-west-1
+
+      - name: Sync HTML files to S3 bucket
+        id: s3_sync_html
+        uses: haukurh/aws-s3-sync-action@v1.0.1
+        with:
+          directory: src/
+          s3-bucket: ${{ secrets.AWS_S3_BUCKET }}
+          args: --size-only --exclude="*" --include="*/" --include="*.html" --cache-control="public,max-age=86400"
+
+      - name: Sync other files to S3 bucket
+        id: s3_sync_other
+        uses: haukurh/aws-s3-sync-action@v1.0.1
+        with:
+          directory: src/
+          s3-bucket: ${{ secrets.AWS_S3_BUCKET }}
+          args: --size-only --cache-control="public,max-age=2592000" --delete
+
+      - name: Prepare CloudFront invalidation batch
+        id: cloudfront
+        uses: haukurh/aws-cloudfront-invalidation-action@v1
+        with:
+          sync-output: "${{ steps.s3_sync_html.outputs.stdout }}${{ steps.s3_sync_other.outputs.stdout }}"
+          s3-bucket: ${{ secrets.AWS_S3_BUCKET }}
+
+      - name: Run CloudFront invalidation
+        if: steps.cloudfront.outputs.quantity != 0
+        run: aws cloudfront create-invalidation --distribution-id ${{ secrets.AWS_CLOUDFRONT_DIST }} --invalidation-batch ${{ steps.cloudfront.outputs.json_escaped }}
