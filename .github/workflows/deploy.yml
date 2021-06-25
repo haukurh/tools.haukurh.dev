@@ -25,7 +25,7 @@ jobs:
         id: s3_sync_html
         uses: haukurh/aws-s3-sync-action@v1.0.1
         with:
-          directory: src/
+          directory: public/
           s3-bucket: ${{ secrets.AWS_S3_BUCKET }}
           args: --size-only --exclude="*" --include="*/" --include="*.html" --cache-control="public,max-age=86400"
 
@@ -33,7 +33,7 @@ jobs:
         id: s3_sync_other
         uses: haukurh/aws-s3-sync-action@v1.0.1
         with:
-          directory: src/
+          directory: public/
           s3-bucket: ${{ secrets.AWS_S3_BUCKET }}
           args: --size-only --cache-control="public,max-age=2592000" --delete
 
