@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark light">
+  <style>
+      :root {
+          --border-radius: .4rem;
+          --pre-background-color: hsl(0, 0%, 95%);
+          --pre-background-border: hsl(0, 0%, 90%);
+      }
+      @media (prefers-color-scheme: dark) {
+          :root {
+              --pre-background-color: hsl(0, 0%, 10%);
+              --pre-background-border: hsl(0, 0%, 20%);
+          }
+      }
+      html, body {
+          margin: 0;
+          padding: 0;
+          height: 100vh;
+          box-sizing: border-box;
+          font-family: sans-serif;
+          font-size: 16px;
+      }
+      header, main, aside, fieldset,
+      div, button, legend, label, h1,
+      footer, a, textarea {
+          margin: 0;
+          padding: 0;
+          box-sizing: border-box;
+      }
+      body {
+          display: grid;
+          grid-template-areas: "header header" "main aside" "footer footer";
+          grid-template-columns: 1fr clamp(170px, 20vw, 320px);
+          grid-template-rows: auto 1fr auto;
+      }
+      @media (max-width: 380px) {
+          body {
+              grid-template-areas: "header" "main" "aside" "footer";
+              grid-template-columns: 1fr;
+              grid-template-rows: auto auto 1fr auto;
+          }
+      }
+      header {
+          grid-area: header;
+          background: hsl(327, 89%, 46%);
+          box-shadow: hsla(327, 89%, 46%, .4) 0 2px 10px 2px;
+      }
+      main {
+          grid-area: main;
+          padding: 1rem;
+      }
+      aside {
+          grid-area: aside;
+          padding: 1rem;
+      }
+      footer {
+          grid-area: footer;
+          text-align: center;
+          padding: 1rem 0;
+      }
+      h1 {
+          margin: .8rem 0;
+          padding: 0 1rem;
+          color: #fff;
+      }
+      label {
+          display: block;
+          margin: .2rem 0;
+      }
+
+      main label {
+          margin-bottom: .8rem;
+      }
+      fieldset {
+          margin: 1rem 0;
+          border: none;
+          display: flex;
+          flex-direction: column;
+      }
+      textarea {
+          width: 100%;
+          resize: vertical;
+          font-family: monospace;
+          padding: .8rem .6rem;
+          height: 30vh;
+          border-radius: var(--border-radius);
+      }
+      button {
+          padding: .4em .6em;
+      }
+      .container {
+          position: relative;
+      }
+      pre {
+          margin: 1rem 0;
+          padding: 1rem;
+          min-height: 64px;
+          background-color: var(--pre-background-color);
+          border: 1px solid var(--pre-background-border);
+          border-radius: var(--border-radius);
+      }
+      #copy-icon {
+          position: absolute;
+          top: .6rem;
+          right: .6rem;
+          opacity: 1;
+          animation: fade-in 400ms cubic-bezier(0.390, 0.575, 0.565, 1.000) both;
+      }
+      #copy-icon.hide {
+          animation: fade-out 400ms ease-out both;
+      }
+
+      #messages {
+          position: fixed;
+          transition: all 400ms ease-in-out;
+          display: flex;
+          flex-direction: column;
+          justify-content: flex-end;
+          align-items: center;
+          bottom: 1rem;
+          left: 0;
+          right: 0;
+          pointer-events: none;
+          padding: .4rem .8rem;
+      }
+
+      .message {
+          display: block;
+          padding: .8rem 1.2rem;
+          background-color: #27AE60;
+          color: #ffffff;
+          margin: .4rem 0;
+          visibility: visible;
+          transition: all 400ms ease-in-out;
+          border: 1px solid #21a85a;
+          border-radius: 5px;
+          box-shadow: 1px 1px 7px -3px rgba(0, 0, 0, .6);
+          animation: fade-in 0.8s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;
+          animation-fill-mode: forwards !important;
+      }
+
+      .message.warning {
+          background-color: #ae2727;
+          border: 1px solid #a82121;
+      }
+
+      .hide {
+          animation: fade-out 1s ease-out both;
+      }
+
+      @keyframes fade-in {
+          0% {
+              opacity: 0;
+          }
+          100% {
+              opacity: 1;
+          }
+      }
+
+      @keyframes fade-out {
+          0% {
+              opacity: 1;
+          }
+          100% {
+              opacity: 0;
+              pointer-events: none;
+              visibility: hidden;
+          }
+      }
+  </style>
+  <title>Online tools</title>
+</head>
+<body>
+
+<header>
+  <h1>Online tools</h1>
+</header>
+
+<main>
+  <label for="input">Input</label>
+  <textarea id="input" placeholder="Paste in text you want to manipulate"></textarea>
+  <div class="container">
+    <pre id="output"></pre>
+    <button id="copy-icon"><svg aria-hidden="true" width="16" height="16" focusable="false" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M433.941 65.941l-51.882-51.882A48 48 0 0 0 348.118 0H176c-26.51 0-48 21.49-48 48v48H48c-26.51 0-48 21.49-48 48v320c0 26.51 21.49 48 48 48h224c26.51 0 48-21.49 48-48v-48h80c26.51 0 48-21.49 48-48V99.882a48 48 0 0 0-14.059-33.941zM266 464H54a6 6 0 0 1-6-6V150a6 6 0 0 1 6-6h74v224c0 26.51 21.49 48 48 48h96v42a6 6 0 0 1-6 6zm128-96H182a6 6 0 0 1-6-6V54a6 6 0 0 1 6-6h106v88c0 13.255 10.745 24 24 24h88v202a6 6 0 0 1-6 6zm6-256h-64V48h9.632c1.591 0 3.117.632 4.243 1.757l48.368 48.368a6 6 0 0 1 1.757 4.243V112z"/></svg></button>
+  </div>
+</main>
+
+<aside>
+  <form id="tasks">
+    <fieldset>
+      <label><input type="radio" name="task" value="urlEncode" required> URL encode</label>
+      <label><input type="radio" name="task" value="urlDecode" required> URL decode</label>
+      <label><input type="radio" name="task" value="base64Encode" required> base64 encode</label>
+      <label><input type="radio" name="task" value="base64Decode" required> base64 decode</label>
+      <label><input type="radio" name="task" value="jsonPretty" required> JSON pretty</label>
+      <label><input type="radio" name="task" value="lowercase" required> lowercase</label>
+      <label><input type="radio" name="task" value="uppercase" required> UPPERCASE</label>
+      <label><input type="radio" name="task" value="sortASC" required> Sort ASC</label>
+      <label><input type="radio" name="task" value="sortDESC" required> Sort DESC</label>
+      <label><input type="radio" name="task" value="stringToTime" required> String to time</label>
+      <label><input type="radio" name="task" value="timeToDate" required> Time to date</label>
+    </fieldset>
+    <button type="submit">Submit</button>
+  </form>
+</aside>
+
+<footer>See on <a href="https://github.com/haukurh/tools.haukurh.dev" target="_blank" rel="noopener">GitHub</a></footer>
+
+<div id="messages"></div>
+
+<script>
+
+    const copy = async text => {
+        navigator.clipboard.writeText(text)
+            .then(() => console.log(`Copied to clipboard`))
+            .catch(() => console.error(`Unable to copy to clipboard`))
+            .finally(() => message(`Copied to clipboard`));
+    }
+
+    const wait = async (callback, time) => {
+        return new Promise(resolve => {
+            setTimeout(() => {
+                resolve(callback());
+            }, time);
+        });
+    };
+
+    const message = (msg, classes = []) => {
+        const body = document.getElementById('messages');
+        let modal = document.createElement('div');
+        classes.forEach((className) => modal.classList.add(className));
+        const hide = () => {
+            wait(() => modal.classList.add('hide'), 4000)
+                .then(() => {});
+        }
+        modal.classList.add('message');
+        modal.innerText = msg;
+        wait(() => body.appendChild(modal), 0)
+            .then(() => hide())
+    };
+
+
+    const getFormData = (form) => {
+    const data = new FormData(form);
+    return Object.fromEntries(data);
+};
+
+const tasks = {
+    urlEncode: (data) => encodeURIComponent(data),
+    urlDecode: (data) => decodeURIComponent(data),
+    base64Encode: (data) => window.btoa(data),
+    base64Decode: (data) => window.atob(data),
+    lowercase: (data) => data.toLowerCase(),
+    uppercase: (data) => data.toUpperCase(),
+    sortASC: (data) => data.split('\n').sort().join('\n'),
+    sortDESC: (data) => data.split('\n').sort().reverse().join('\n'),
+    jsonPretty: (data) => JSON.stringify(JSON.parse(data), null, 2),
+    timeToDate: (data) => (new Date(parseInt(data) * 1000)).toJSON(),
+    stringToTime: (data) => (Date.parse(data) / 1000),
+};
+
+const copyIcon = document.getElementById('copy-icon');
+const form = document.getElementById('tasks');
+const input = document.getElementById('input');
+const output = document.getElementById('output');
+const notFound = (taskId) => console.error(`Task ${taskId} not found!`);
+
+copyIcon.addEventListener('click', () => {
+    copy(output.innerText);
+});
+
+form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const data = getFormData(e.target);
+    const task = tasks[data.task] || notFound(data.task);
+    try {
+        if (typeof task === "function") {
+            output.innerText = task(input.value);
+        } else {
+            throw Error('Something strange is going on!');
+        }
+    } catch (e) {
+        console.warn(e.message);
+        message(e.message, ['warning']);
+        output.innerText = '';
+    }
+    if (output.innerText) {
+        copyIcon.classList.remove('hide');
+    } else {
+        copyIcon.classList.add('hide');
+    }
+});
+
+</script>
+
+</body>
+</html>
