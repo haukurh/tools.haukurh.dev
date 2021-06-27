@@ -1,9 +1,8 @@
 name: Deploy to S3 site
 
 on:
-  push:
-    branches:
-      - main
+  release:
+    types: [created]
 
 jobs:
   deploy:
