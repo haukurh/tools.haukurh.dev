@@ -213,8 +213,8 @@
       <label><input type="radio" name="task" value="uppercase" required> UPPERCASE</label>
       <label><input type="radio" name="task" value="sortASC" required> Sort ASC</label>
       <label><input type="radio" name="task" value="sortDESC" required> Sort DESC</label>
-      <label><input type="radio" name="task" value="stringToTime" required> String to time</label>
-      <label><input type="radio" name="task" value="timeToDate" required> Time to date</label>
+      <label title="Convert human readable date to UNIX time"><input type="radio" name="task" value="stringToTime" required> date to UNIX time</label>
+      <label title="Convert UNIX time to date in the ISO 8601 format"><input type="radio" name="task" value="timeToDate" required> UNIX time to date</label>
       <label title="Split DNS TXT record to 255 char chunks"><input type="radio" name="task" value="txtSplit" required> TXT split</label>
     </fieldset>
     <button type="submit">Submit</button>
@@ -272,7 +272,7 @@ const tasks = {
     sortASC: (data) => data.split('\n').sort().join('\n'),
     sortDESC: (data) => data.split('\n').sort().reverse().join('\n'),
     jsonPretty: (data) => JSON.stringify(JSON.parse(data), null, 2),
-    timeToDate: (data) => (new Date(parseInt(data) * 1000)).toJSON(),
+    timeToDate: (data) => (new Date(parseInt(data) * 1000)).toISOString(),
     stringToTime: (data) => (Date.parse(data) / 1000),
     txtSplit: (data, parts = []) => {
       parts.push(data.substring(0, 255));
