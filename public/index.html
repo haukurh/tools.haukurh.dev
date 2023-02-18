@@ -215,6 +215,7 @@
       <label><input type="radio" name="task" value="sortDESC" required> Sort DESC</label>
       <label><input type="radio" name="task" value="stringToTime" required> String to time</label>
       <label><input type="radio" name="task" value="timeToDate" required> Time to date</label>
+      <label title="Split DNS TXT record to 255 char chunks"><input type="radio" name="task" value="txtSplit" required> TXT split</label>
     </fieldset>
     <button type="submit">Submit</button>
   </form>
@@ -273,6 +274,13 @@ const tasks = {
     jsonPretty: (data) => JSON.stringify(JSON.parse(data), null, 2),
     timeToDate: (data) => (new Date(parseInt(data) * 1000)).toJSON(),
     stringToTime: (data) => (Date.parse(data) / 1000),
+    txtSplit: (data, parts = []) => {
+      parts.push(data.substring(0, 255));
+      if (data.length >= 255) {
+        return tasks.txtSplit(data.substring(255), parts);
+      }
+      return parts.map((entry) => `"${entry}"`).join(' ');
+    },
 };
 
 const copyIcon = document.getElementById('copy-icon');
