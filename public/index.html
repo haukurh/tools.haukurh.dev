@@ -208,6 +208,7 @@
       <label><input type="radio" name="task" value="urlDecode" required> URL decode</label>
       <label><input type="radio" name="task" value="base64Encode" required> base64 encode</label>
       <label><input type="radio" name="task" value="base64Decode" required> base64 decode</label>
+      <label><input type="radio" name="task" value="jsonParse" required> JSON</label>
       <label><input type="radio" name="task" value="jsonPretty" required> JSON pretty</label>
       <label><input type="radio" name="task" value="lowercase" required> lowercase</label>
       <label><input type="radio" name="task" value="uppercase" required> UPPERCASE</label>
@@ -272,6 +273,7 @@ const tasks = {
     sortASC: (data) => data.split('\n').sort().join('\n'),
     sortDESC: (data) => data.split('\n').sort().reverse().join('\n'),
     jsonPretty: (data) => JSON.stringify(JSON.parse(data), null, 2),
+    jsonParse: (data) => JSON.stringify(JSON.parse(data)),
     timeToDate: (data) => (new Date(parseInt(data) * 1000)).toISOString(),
     stringToTime: (data) => (Date.parse(data) / 1000),
     txtSplit: (data, parts = []) => {
