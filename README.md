@@ -17,6 +17,7 @@ __Encode/Decode__
 
 - URL
 - base64
+- JSON
 
 __Text manipulation__
 
@@ -28,6 +29,10 @@ __Date__
 
 - UNIX time to date
 - Date to UNIX time
+
+__Other__
+
+- DNS TXT split
 
 ## Icons
 
