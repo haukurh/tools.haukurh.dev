@@ -204,6 +204,7 @@
 <aside>
   <form id="tasks">
     <fieldset>
+      <label><input type="radio" name="task" value="url2json" required> parse URL</label>
       <label><input type="radio" name="task" value="urlEncode" required> URL encode</label>
       <label><input type="radio" name="task" value="urlDecode" required> URL decode</label>
       <label><input type="radio" name="task" value="base64Encode" required> base64 encode</label>
@@ -263,7 +264,26 @@
     return Object.fromEntries(data);
 };
 
+function parseUrl(url) {
+    const u = new URL(url);
+    const params = [];
+    for (const [key, value] of u.searchParams) {
+        params.push({ [key]: value });
+    }
+    return {
+        scheme: u.protocol,
+        username: u.username,
+        password: u.password,
+        host: u.hostname,
+        port: u.port,
+        path: u.pathname,
+        query: params,
+        fragment: u.hash,
+    };
+}
+
 const tasks = {
+    url2json: (data) => JSON.stringify(parseUrl(data), null, 2),
     urlEncode: (data) => encodeURIComponent(data),
     urlDecode: (data) => decodeURIComponent(data),
     base64Encode: (data) => window.btoa(data),
